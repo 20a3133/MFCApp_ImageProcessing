@@ -213,13 +213,6 @@ void CMFCApplication2Dlg::OnBnClickedLoadFile()
 
 	ReleaseDC(dc);
 	EndWaitCursor(); //処理中マーク消去指示
-
-	/*BeginWaitCursor(); //処理中マーク表示指示
-	InitPictureContlor();
-	mat = cv::imread("Lenna.png");
-	cv::Mat img = mat.clone();*/
-
-	
 }
 
 
@@ -234,8 +227,9 @@ void CMFCApplication2Dlg::setPictureContlore(HDC dstDC, Mat img, CDC* dc, Size s
 
 	struct MYBITMAPINFO {
 		BITMAPINFOHEADER bmiHeader;
-		RGBQUAD bimColors[256];
+		RGBQUAD bmiColors[256];
 	};
+
 	MYBITMAPINFO myinfo = {};
 	LPBITMAPINFO pInfo = reinterpret_cast<LPBITMAPINFO>(&myinfo);
 
@@ -273,7 +267,6 @@ void CMFCApplication2Dlg::OnBnClickedMonotone()
 	cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
 	
 	setPictureContlore(dstDC, img, dc, size);//Picture Contlorに描画
-	//AfxMessageBox(_T("グレー"));
 	EndWaitCursor(); //処理中マーク消去指示
 }
 
@@ -315,8 +308,6 @@ void CMFCApplication2Dlg::OnBnClickedLaplacian()
 	cv::Mat img = mat.clone();
 	cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
 	cv::Laplacian(img, img, CV_8UC1, 1, 5);
-	cv::convertScaleAbs(img, img, 1, 0);
-	cv::threshold(img, img, 10, 100, cv::THRESH_BINARY);
 
 	setPictureContlore(dstDC, img, dc, size);//Picture Contlorに描画
 	EndWaitCursor(); //処理中マーク消去指示
@@ -330,10 +321,8 @@ void CMFCApplication2Dlg::OnBnClickedSobel()
 	InitPictureContlor();
 	cv::Mat img = mat.clone();
 	cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
-	cv::Sobel(img, img, CV_8UC1, 1, 1, 3);
-	cv::convertScaleAbs(img, img, 1, 0);
-	cv::threshold(img, img, 10, 100, cv::THRESH_BINARY);
-
+	cv::Sobel(img, img, CV_8UC1, 1, 1, 1, 3);
+	
 	setPictureContlore(dstDC, img, dc, size);//Picture Contlorに描画
 	EndWaitCursor(); //処理中マーク消去指示
 }
