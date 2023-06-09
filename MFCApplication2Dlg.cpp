@@ -193,8 +193,6 @@ void CMFCApplication2Dlg::OnBnClickedLoadFile()
 
 	BeginWaitCursor(); //処理中マーク表示指示
 	InitPictureContlor();
-	Invalidate();
-	UpdateWindow();
 	cv::resize(img, img, size);
 	cv::flip(img, img, 0);
 
@@ -220,9 +218,6 @@ void CMFCApplication2Dlg::OnBnClickedLoadFile()
 void CMFCApplication2Dlg::setPictureContlore(HDC dstDC, Mat img, CDC* dc, Size size)
 {
 	// TODO: ここに実装コードを追加します.
-
-	Invalidate();
-	UpdateWindow();
 	cv::resize(img, img, size);
 	cv::flip(img, img, 0);
 
