@@ -237,7 +237,7 @@ void CMFCApplication2Dlg::setPictureContlore(HDC dstDC, Mat img, CDC* dc, Size s
 	pInfo->bmiHeader.biCompression = BI_RGB;
 
 
-	for (int i = 0; i < 256; i++) {
+	for (int i = 0; i < std::pow(2, 8); i++) {
 		pInfo->bmiColors[i].rgbRed = i;
 		pInfo->bmiColors[i].rgbGreen = i;
 		pInfo->bmiColors[i].rgbBlue = i;
