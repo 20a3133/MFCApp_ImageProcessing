@@ -377,12 +377,9 @@ void CMFCApplication2Dlg::OnBnClickedPicreset()
 {
 	BeginWaitCursor(); //処理中マーク表示指示
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-	InitPictureContlor();
 	cv::Mat img = mat.clone();
 
 	InitPictureContlor();
-	Invalidate();
-	UpdateWindow();
 	cv::resize(img, img, size);
 	cv::flip(img, img, 0);
 
