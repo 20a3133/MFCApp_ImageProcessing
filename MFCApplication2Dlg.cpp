@@ -79,6 +79,7 @@ BEGIN_MESSAGE_MAP(CMFCApplication2Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CANNY, &CMFCApplication2Dlg::OnBnClickedCanny)
 	ON_BN_CLICKED(IDC_GAUCIAN, &CMFCApplication2Dlg::OnBnClickedGaucian)
 	ON_BN_CLICKED(IDOK, &CMFCApplication2Dlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_PICRESET, &CMFCApplication2Dlg::OnBnClickedPicreset)
 END_MESSAGE_MAP()
 
 
@@ -374,4 +375,36 @@ void CMFCApplication2Dlg::InitPictureContlor()
 	GetDlgItem(IDC_IMAGE)->GetClientRect(&rc);
 
 	size = cv::Size(rc.Width() & ~0x03, rc.Height() & ~0x03);
+}
+
+
+void CMFCApplication2Dlg::OnBnClickedPicreset()
+{
+	BeginWaitCursor(); //処理中マーク表示指示
+	// TODO: ここにコントロール通知ハンドラー コードを追加します。
+	InitPictureContlor();
+	cv::Mat img = mat.clone();
+
+	InitPictureContlor();
+	Invalidate();
+	UpdateWindow();
+	cv::resize(img, img, size);
+	cv::flip(img, img, 0);
+
+	//Picture Contlorに描画
+	BITMAPINFO info = {};
+	info.bmiHeader.biBitCount = 24;
+	info.bmiHeader.biWidth = size.width;
+	info.bmiHeader.biHeight = size.height;
+	info.bmiHeader.biPlanes = 1;
+	info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	info.bmiHeader.biCompression = BI_RGB;
+
+	StretchDIBits(dstDC, 0, 0,
+		size.width, size.height, 0, 0,
+		size.width, size.height,
+		img.data, &info, DIB_RGB_COLORS, SRCCOPY);
+
+	ReleaseDC(dc);
+	EndWaitCursor(); //処理中マーク消去指示
 }

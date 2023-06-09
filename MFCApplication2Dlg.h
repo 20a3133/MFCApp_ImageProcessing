@@ -53,8 +53,7 @@ public:
 	afx_msg void OnBnClickedCanny();
 	afx_msg void OnBnClickedGaucian();
 	afx_msg void OnBnClickedOk();
-	afx_msg void OnBnClickedReset();
-	afx_msg void OnBnClickedClear();
+	afx_msg void OnBnClickedPicreset();
 private:
 	void InitPictureContlor();
 };
